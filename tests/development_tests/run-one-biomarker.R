@@ -12,8 +12,11 @@ library(survey)
 library(dplyr)
 library(BRINDA)
 
-prefix <- "S3-"
-biomarkerField <- "haemoglobin"
+# Country code for Malawi = "S2"
+# Country code for Ethiopia = "S3""
+
+prefix <- "S2-"
+biomarkerField <- "zinc"
 group_id <- "WRA"
 aggregationField <- "region"
 RunSurveyWeights <- TRUE
@@ -34,14 +37,14 @@ load(file=paste0(biomarkerField, "-", group_id, "-thresholds.rda"))
 
 # run SummaryStats function
 
-## Make sure that the arguments of the function equal the same as the loaded data and thresholds
-## file
+# Make sure that the arguments of the function equal the same as the loaded 
+# data and thresholds file
 
 source("../../R/SummaryStats.R")
 output <- SummaryStats(theData = theData,
-                       biomarkerField = "haemoglobin",
-                       aggregationField = "region",
-                       group_id = "WRA",
+                       biomarkerField = biomarkerField,
+                       aggregationField = aggregationField,
+                       group_id = group_id,
                        thresholds = thresholds,
                        RunSurveyWeights = TRUE,
                        Brinda = TRUE,
@@ -49,14 +52,16 @@ output <- SummaryStats(theData = theData,
                        HaemSmokeAdjust = TRUE,
                        ZincCutoff = TRUE)
 
+
+## Testing with or without weights ## 
 # If one would like to compare the difference of one dataset with and without
 # without weights (please use test_SummaryStats.R to test differences
 # among all datasets)
 
 with_weights <- SummaryStats(theData = theData,
-                       biomarkerField = "haemoglobin",
-                       aggregationField = "region",
-                       group_id = "WRA",
+                       biomarkerField = biomarkerField,
+                       aggregationField = aggregationField,
+                       group_id = group_id,
                        thresholds = thresholds,
                        RunSurveyWeights = TRUE, # set to true (with weights)
                        Brinda = TRUE,
